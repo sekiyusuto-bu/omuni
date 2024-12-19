@@ -17,7 +17,7 @@ private:
   void controller_callback(const sensor_msgs::msg::Joy & msg) const
   {
     float V1,V2,V3 = 0;
-    float Velocity = 1;
+    float Velocity = 200;
     float value = sqrt(3)/2;
 
     V1 = Velocity*(msg.axes[2]-msg.buttons[4]+msg.buttons[5]);
