@@ -14,6 +14,10 @@ find_package(robomas_plugins)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
+INCLUDE_DIRECTORIES(
+  include
+)
+
 add_executable(3rin src/3rin.cpp)
 ament_target_dependencies(3rin
   rclcpp

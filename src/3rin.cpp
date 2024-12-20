@@ -8,6 +8,7 @@
 #include "std_msgs/msg/string.hpp"
 #include "robomas_plugins/msg/robomas_target.hpp"
 #include "robomas_plugins/msg/robomas_frame.hpp"
+#include "omuni/omuni_utils.hpp"
 
 using std::placeholders::_1;
 
@@ -16,13 +17,24 @@ class Omuni : public rclcpp::Node
 private:
   void controller_callback(const sensor_msgs::msg::Joy & msg) const
   {
+    if(msg.buttons[7]){
+      omuni_setting_->publish(omuni::robomas_utils::to_velocity_mode(0));
+      omuni_setting_->publish(omuni::robomas_utils::to_velocity_mode(1));
+      omuni_setting_->publish(omuni::robomas_utils::to_velocity_mode(2));
+    }
+    if(msg.buttons[6]){
+      omuni_setting_->publish(omuni::robomas_utils::to_disable_mode(0));
+      omuni_setting_->publish(omuni::robomas_utils::to_disable_mode(1));
+      omuni_setting_->publish(omuni::robomas_utils::to_disable_mode(2));
+    }
+
     float V1,V2,V3 = 0;
     float Velocity = 200;
-    float value = sqrt(3)/2;
+    const float value = sqrt(3)/2;
 
-    V1 = Velocity*(msg.axes[2]-msg.buttons[4]+msg.buttons[5]);
-    V2 = Velocity*(-0.5*msg.axes[2]+value*msg.axes[3]-msg.buttons[4]+msg.buttons[5]);
-    V3 = Velocity*(-0.5*msg.axes[2]-value*msg.axes[3]-msg.buttons[4]+msg.buttons[5]);
+    V1 = Velocity*(msg.axes[3]-msg.buttons[4]+msg.buttons[5]);
+    V2 = Velocity*(-0.5*msg.axes[3]-value*msg.axes[4]-msg.buttons[4]+msg.buttons[5]);
+    V3 = Velocity*(-0.5*msg.axes[3]+value*msg.axes[4]-msg.buttons[4]+msg.buttons[5]);
 
     auto message1 = robomas_plugins::msg::RobomasTarget{};
     message1.target = V1;
@@ -45,12 +57,14 @@ public:
     this->omuni1_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target1", 10);
     this->omuni2_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target2", 10);
     this->omuni3_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target3", 10);
+    this->omuni_setting  = this->create_publisher<robomas_plugins::msg::RobomasFrame>("robomas_frame", 10);
   }
 
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr controller_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni1_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni2_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni3_;
+  rclcpp::Publisher<robomas_plugins::msg::RobomasFrame>SharedPtr omuni_setting_;
 };
 
 int main(int argc, char * argv[])
