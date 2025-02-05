@@ -57,14 +57,14 @@ public:
     this->omuni1_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target1", 10);
     this->omuni2_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target2", 10);
     this->omuni3_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target3", 10);
-    this->omuni_setting  = this->create_publisher<robomas_plugins::msg::RobomasFrame>("robomas_frame", 10);
+    this->omuni_setting_  = this->create_publisher<robomas_plugins::msg::RobomasFrame>("robomas_frame", 10);
   }
 
   rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr controller_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni1_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni2_;
   rclcpp::Publisher<robomas_plugins::msg::RobomasTarget>::SharedPtr omuni3_;
-  rclcpp::Publisher<robomas_plugins::msg::RobomasFrame>SharedPtr omuni_setting_;
+  rclcpp::Publisher<robomas_plugins::msg::RobomasFrame>::SharedPtr omuni_setting_;
 };
 
 int main(int argc, char * argv[])
