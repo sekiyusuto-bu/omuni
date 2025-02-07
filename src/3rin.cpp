@@ -53,7 +53,7 @@ public:
   Omuni()
   : Node("omuni")
   {
-    this->controller_ = this->create_subscription<sensor_msgs::msg::Joy>("Joy", 10, std::bind(&Omuni::controller_callback, this, std::placeholders::_1));
+    this->controller_ = this->create_subscription<sensor_msgs::msg::Joy>("joy", 10, std::bind(&Omuni::controller_callback, this, std::placeholders::_1));
     this->omuni1_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target1", 10);
     this->omuni2_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target2", 10);
     this->omuni3_ = this->create_publisher<robomas_plugins::msg::RobomasTarget>("robomas_target3", 10);
