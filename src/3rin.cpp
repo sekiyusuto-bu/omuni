@@ -32,9 +32,9 @@ private:
     float Velocity = 200;
     const float value = sqrt(3)/2;
 
-    V1 = Velocity*(msg.axes[0]-msg.buttons[1]+msg.buttons[5]+msg.buttons[7]);
-    V2 = Velocity*(-0.5*(msg.axes[0]+msg.buttons[7])-value*(msg.axes[1]+msg.buttons[6])-msg.buttons[4]+msg.buttons[5]);
-    V3 = Velocity*(-0.5*(msg.axes[0]+msg.buttons[7])+value*(msg.axes[1]+msg.buttons[6])-msg.buttons[4]+msg.buttons[5]);
+    V1 = Velocity*(msg.axes[0]-msg.buttons[1]+msg.buttons[5]-msg.buttons[4]);
+    V2 = Velocity*(-0.5*msg.axes[0]-0.5*msg.buttons[7]-value*msg.axes[1]-value*msg.buttons[6]-msg.buttons[4]+msg.buttons[5]);
+    V3 = Velocity*(-0.5*msg.axes[0]-0.5*msg.buttons[7]+value*msg.axes[1]+value*msg.buttons[6]-msg.buttons[4]+msg.buttons[5]);
 
     auto message1 = robomas_plugins::msg::RobomasTarget{};
     message1.target = V1;
