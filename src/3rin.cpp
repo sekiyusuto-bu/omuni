@@ -37,7 +37,7 @@ private:
       Velocity  =  400;
     }
     
-    V1 = Velocity*(msg.axes[0]rotation_value*(msg.buttons[5]-msg.buttons[4]));
+    V1 = Velocity*(msg.axes[0]+rotation_value*(msg.buttons[5]-msg.buttons[4]));
     V2 = Velocity*(-0.5*msg.axes[0]-value*msg.axes[1]+rotation_value*(-msg.buttons[4]+msg.buttons[5]));
     V3 = Velocity*(-0.5*msg.axes[0]+value*msg.axes[1]+rotation_value*(-msg.buttons[4]+msg.buttons[5]));
 
