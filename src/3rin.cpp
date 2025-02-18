@@ -31,10 +31,10 @@ private:
     float V1,V2,V3 = 0;
     float Velocity = 200;
     const float value = sqrt(3)/2;
-    const float rotation_value = 1/2;
+    float rotation_value = 1/2;
 
-    if(msg.buttons[4]){
-      Velocity  =  400;
+    if(msg.buttons[0]){
+      Velocity = 400;
     }
     
     V1 = Velocity*(msg.axes[6]+rotation_value*(msg.buttons[5]-msg.buttons[4]));
