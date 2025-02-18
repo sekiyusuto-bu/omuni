@@ -34,7 +34,7 @@ private:
     float rotation_value = 1/2;
 
     if(msg.buttons[0]){
-      Velocity = 400;
+      Velocity = 300;
     }
     
     V1 = Velocity*(msg.axes[6]+rotation_value*(msg.buttons[5]-msg.buttons[4]));
