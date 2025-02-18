@@ -37,9 +37,9 @@ private:
       Velocity = 300;
     }
     
-    V1 = Velocity*(msg.axes[6]+rotation_value*(msg.buttons[5]-msg.buttons[4]));
-    V2 = Velocity*(-0.5*msg.axes[6]-value*msg.axes[7]+rotation_value*(-msg.buttons[4]+msg.buttons[5]));
-    V3 = Velocity*(-0.5*msg.axes[7]+value*msg.axes[7]+rotation_value*(-msg.buttons[4]+msg.buttons[5]));
+    V1 = Velocity*(msg.axes[6]+rotation_value*msg.buttons[5]-rotation_value*msg.buttons[4]);
+    V2 = Velocity*(-0.5*msg.axes[6]-value*msg.axes[7]-rotation_value*msg.buttons[4]+rotation_value*msg.buttons[5]);
+    V3 = Velocity*(-0.5*msg.axes[7]+value*msg.axes[7]-rotation_value*-msg.buttons[4]+rotation_value*msg.buttons[5]);
 
     auto message1 = robomas_plugins::msg::RobomasTarget{};
     message1.target = V1;
