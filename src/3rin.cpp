@@ -15,6 +15,10 @@ using std::placeholders::_1;
 class Omuni : public rclcpp::Node
 {
 private:
+  float horizon_intertial_frame = 0;
+  float vertical_intertial_frame = 0;
+  float Velocity = 300;
+
   void controller_callback(const sensor_msgs::msg::Joy & msg) const
   {
     if(msg.buttons[7]){
@@ -29,28 +33,46 @@ private:
     }
 
     float V1,V2,V3 = 0;
-    float Velocity = 200;
     const float value = sqrt(3)/2;
     float rotation_value = 0.5;
 
     if(msg.buttons[0]){
       Velocity = 400;
+    } //加速する
+
+    float scale = std::pow(10, 3);  //数字の切り捨て。小数第３位。
+
+    if(horizon_intertial_frame <= 1||horizon_intertial_frame < std::floor(msg.axes[0]*scale)/scale){
+      horizon_intertial_frame = horizon_intertial_frame + 0.001;
+      sleep(1);
     }
+    else if(horizon_intertial_frame >= 0||horizon_intertial_frame > std::floor(msg.axes[0]*scale)/scale){
+      horizon_intertial_frame = horizon_intertial_frame - 0.001;
+      sleep(1);
+    }
+    if(vertical_intertial_frame <= 1||vertical_intertial_frame < std::floor(msg.axes[1]*scale)/scale){
+      vertical_intertial_frame = vertical_intertial_frame + 0.001;
+      sleep(1);
+    }
+    else if(vertical_intertial_frame >= 0||vertical_intertial_frame > std::floor(msg.axes[1]*scale)/scale){
+      horizon_intertial_frame = horizon_intertial_frame - 0.001;
+      sleep(1);
+    } //慣性を取り入れるための関数
     
-    V1 = Velocity*(msg.axes[0]+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
-    V2 = Velocity*(-0.5*msg.axes[0]-value*msg.axes[1]+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
-    V3 = Velocity*(-0.5*msg.axes[0]+value*msg.axes[1]+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
+    V1 = Velocity*(horizon_intertial_frame+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
+    V2 = Velocity*(-0.5*horizon_intertial_frame-value*vertical_intertial_frame+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
+    V3 = Velocity*(-0.5*horizon_intertial_frame+value*vertical_intertial_frame+rotation_value*(1-msg.axes[5])-rotation_value*(1-msg.axes[2]));
 
     auto message1 = robomas_plugins::msg::RobomasTarget{};
     message1.target = V1;
     auto message2 = robomas_plugins::msg::RobomasTarget{};
     message2.target = V2;
     auto message3 = robomas_plugins::msg::RobomasTarget{};
-    message3.target = V3;
+    message3.target = V3; 
 
     omuni1_->publish(message1);
     omuni2_->publish(message2);
-    omuni3_->publish(message3);
+    omuni3_->publish(message3); //足回りの速度調整とロボマスに情報を送るための式。
   } 
   
 
