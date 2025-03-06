@@ -15,8 +15,6 @@ using std::placeholders::_1;
 class Omuni : public rclcpp::Node
 {
 private:
-  float Velocity = 300;
-
   void controller_callback(const sensor_msgs::msg::Joy & msg) const
   {
     if(msg.buttons[7]){
@@ -33,6 +31,7 @@ private:
     float V1,V2,V3 = 0;
     const float value = sqrt(3)/2;
     float rotation_value = 0.5;
+    float Velocity = 300;
 
     if(msg.buttons[0]){
       Velocity = 400;
