@@ -37,7 +37,7 @@ private:
       Velocity = 400;
     } //加速する
 
-    if(msg.buttos[0] < 0 && msg.buttons[1] < 0){
+    if(msg.buttons[0] < 0 && msg.buttons[1] < 0){
       V1 = Velocity*(-msg.axes[0]*msg.axes[0]-rotation_value*(1-msg.axes[5])*(1-msg.axes[5])-rotation_value*(1-msg.axes[2])*(1-msg.axes[2]));
       V2 = Velocity*(0.5*msg.axes[0]*msg.axes[0]+value*msg.axes[1]*msg.axes[1]+rotation_value*(1-msg.axes[5])*(1-msg.axes[5])-rotation_value*(1-msg.axes[2])*(1-msg.axes[2]));
       V3 = Velocity*(0.5*msg.axes[0]*msg.axes[0]-value*msg.axes[1]*msg.axes[1]+rotation_value*(1-msg.axes[5])*(1-msg.axes[5])-rotation_value*(1-msg.axes[2])*(1-msg.axes[2]));
