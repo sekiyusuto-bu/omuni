@@ -33,7 +33,7 @@ private:
     float rotation_value = 0.2;
     float Velocity = 300;
 
-    if(msg.buttons[0]){
+    if(msg.buttons[5]){
       Velocity = 400;
     } //加速する
 
