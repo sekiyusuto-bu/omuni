@@ -30,7 +30,7 @@ private:
 
     float V1,V2,V3 = 0;
     const float value = sqrt(3)/2;
-    float rotation_value = 0.2;
+    float rotation_value = 0.05;
     float Velocity = 300;
 
     if(msg.buttons[5]){
