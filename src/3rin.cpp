@@ -36,6 +36,9 @@ private:
     if(msg.buttons[5]){
       Velocity = 400;
     } //加速する
+    else if (msg.buttons[4]){
+      Velocity = 200;
+    }
 
     if(msg.axes[0] < 0 && msg.axes[1] < 0){
       V1 = Velocity*(-msg.axes[0]*msg.axes[0]-rotation_value*(1-msg.axes[5])*(1-msg.axes[5])-rotation_value*(1-msg.axes[2])*(1-msg.axes[2]));
