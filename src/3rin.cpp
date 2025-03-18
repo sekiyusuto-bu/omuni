@@ -34,7 +34,7 @@ private:
     float Velocity = 300;
 
     if(msg.buttons[5]){
-      Velocity = 400;
+      Velocity = 500;
     } //加速する
     else if (msg.buttons[4]){
       Velocity = 200;
